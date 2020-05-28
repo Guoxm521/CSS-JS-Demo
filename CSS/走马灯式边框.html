@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <title>Document</title>
+    <style>
+        
+        :root {
+            --borderwidth:2px;
+        }
+        *,
+        *:before,
+        *:after {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        .dy {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            background-color: gray;
+           
+        }
+        .dy:before,
+        .dy:after,
+        .dy span:first-child:before,
+        .dy span:first-child:after {
+            content: "";
+            position: absolute;
+            background-color: red;
+            -webkit-transition: all .2s ease;
+            transition: all .2s ease;
+        }
+        
+        /* 上边 */
+        .dy:before {
+            width: 0;
+            top: -2px;
+            right: 0;
+            height: 2px;
+        }
+        /* 右边 */
+        .dy:after {
+            width: 2px;
+            height: 0;
+            bottom: 0;
+            right: -2px;
+        }
+       /* 下边 */
+       .dy span:before {
+           width: 0;
+           height: 2px;
+           bottom: -2px;
+           left: 0;
+       }
+       /* 左边 */
+       .dy span:after {
+           width: 2px;
+           height: 0;
+           top: 0;
+           left: -2px;
+       }
+       .dy1:hover:before,
+       .dy1:hover span:before {
+           -webkit-transition-delay: .2s;
+           transition-delay: .2s;
+       }
+       .dy:hover:before ,
+       .dy:hover span:before{
+           width: calc(100% + 2px);
+       }
+       .dy:hover:after,
+       .dy:hover span:after {
+           -webkit-transition-delay: .2s;
+           transition-delay: .2s;
+       }
+       .dy:hover:after,
+       .dy:hover span:after {
+            height: calc(100% + 2px);
+       }
+    
+       .dy {
+           margin: 10px;
+           float: left;
+       }
+       
+    </style>
+</head>
+<body>
+    <div class="dy dy1">
+        <span></span>
+    </div>
+    <div class="dy dy2">
+        <span></span>
+    </div>
+</body>
+</html>
