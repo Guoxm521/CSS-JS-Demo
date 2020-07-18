@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			.box {
+				width: 400px;
+				height: 80px;
+				margin: 15px;
+			}
+			.corner1 {
+				background: linear-gradient(-45deg, transparent 25px, #58a 0);
+			}
+			.corner2 {
+				background: linear-gradient(135deg, transparent 15px, #58a 0) top left,
+					linear-gradient(-135deg, transparent 15px, #58a 0) top right,
+					linear-gradient(-45deg, transparent 15px, #58a 0) bottom right,
+					linear-gradient(45deg, transparent 15px, #58a 0) bottom left;
+				background-size: 50% 50%;
+				background-repeat: no-repeat;
+			}
+			.corner3 {
+				background: radial-gradient(
+							circle at top left,
+							transparent 15px,
+							#58a 0
+						)
+						top left,
+					radial-gradient(circle at top right, transparent 15px, #58a 0) top
+						right,
+					radial-gradient(circle at bottom right, transparent 15px, #58a 0)
+						bottom right,
+					radial-gradient(circle at bottom left, transparent 15px, #58a 0)
+						bottom left;
+				background-size: 50% 50%;
+				background-repeat: no-repeat;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box corner1"></div>
+		<div class="box corner2"></div>
+		<div class="box corner3"></div>
+	</body>
+</html>

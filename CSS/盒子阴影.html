@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div[class^='box'] {
+            width: 200px;
+            height: 60px;
+            background-color: pink;
+            margin: 20px;
+        }
+        .parentbox {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        /* 四周 */
+        .box1 {
+            /* 参数：左边偏移  上边偏移  阴影范围  放大缩小  颜色 */
+            box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.42);  
+        }
+        /* 左边 */
+        .box2 {
+            box-shadow: -15px 0 10px -10px rgba(0, 0, 0, 0.42);
+        }
+        /* 右边 */
+        .box3 {
+            box-shadow: 15px 0 10px -10px rgba(0, 0, 0, 0.42);
+        }
+        /* 左上 */
+        .box4 {
+            box-shadow: -10px -10px 10px 0 rgba(0, 0, 0, 0.42);
+        }
+        /*右下 */
+        .box5 {
+            box-shadow: 10px 10px 10px 0 rgba(0, 0, 0, 0.42);
+        }
+        /*  */
+    </style>
+</head>
+<body>
+    <div class="parentbox">
+        <div class="box1"></div>
+        <div class="box2"></div>
+        <div class="box3"></div>
+        <div class="box4"></div>
+        <div class="box5"></div>
+    </div>
+</body>
+</html>

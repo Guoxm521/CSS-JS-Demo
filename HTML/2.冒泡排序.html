@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 冒泡排序 每两个元素之间进行比较 元素较小在后则交换位置
+        var arr = [12,23,5,4,36,21,9,48];
+        for(var n=1;n<arr.length -1;n++) {
+            for(var i=0;i<arr.length-n;i++) {
+                if(arr[i]>arr[i+1]) {
+                    var tem = arr[i];
+                    arr[i]=arr[i+1];
+                    arr[i+1]=tem;
+                }
+            }
+            console.log(arr);
+        }
+        console.log('最后的'+arr);
+    </script>
+</body>
+</html>

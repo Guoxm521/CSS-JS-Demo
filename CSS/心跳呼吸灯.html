@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			.breath,
+			.heartbeat {
+				width: 100px;
+				height: 40px;
+				line-height: 40px;
+				text-align: center;
+				background-color: #99dd33;
+				margin: 10px;
+				color: #ffffff;
+			}
+			.breath {
+				box-shadow: 0 0 5px #99dd33;
+				border-radius: 4px;
+				animation-name: breath;
+				animation-duration: 6s;
+				animation-timing-function: ease-in-out;
+				animation-iteration-count: infinite;
+			}
+			@keyframes breath {
+				from {
+					opacity: 0.1;
+				}
+				50% {
+					opacity: 1;
+				}
+				to {
+					opacity: 0.1;
+				}
+			}
+			.heartbeat {
+				background-color: #ef0000;
+				border-shadow: 0 0 5px #ef0000;
+				border-radius: 4px;
+				animation-name: heartbeat;
+                animation-duration: 0.83s;
+				animation-timing-function: ease-in-out;
+				animation-iteration-count: infinite;
+			}
+
+			@-webkit-keyframes heartbeat {
+				from {
+					opacity: 0.1;
+				}
+				50% {
+					opacity: 1;
+				}
+				to {
+					opacity: 0.1;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="heartbeat">心跳灯</div>
+		<div class="breath">呼吸灯</div>
+	</body>
+</html>
