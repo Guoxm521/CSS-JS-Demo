@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>自定义选择文本样式</title>
+    <style>
+        body::selection {
+            background-color: #009a61;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    自定义选择文本样式
+    <script>
+        document.onkeyup = function(e) {
+            console.log(e.keyCode)
+        }
+    </script>
+</body>
+</html>

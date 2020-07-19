@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			*:before,
+			*:after {
+				box-sizing: border-box;
+			}
+			.mask-door {
+				position: relative;
+				overflow: hidden;
+				width: 600px;
+				height: 400px;
+			}
+			img {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			.mask-door::before,
+			.mask-door::after {
+				position: absolute;
+				content: "";
+				width: 100%;
+				height: 50%;
+				opacity: 0;
+				background-color: pink;
+                transition: all .3s ease-in-out;
+			}
+            .mask-door::before {
+                top: 0;
+                transform: translate(0,-100%);
+            }
+            .mask-door::after {
+                top: 50%;
+                background-color: red;
+                content: attr(data-title);
+                text-align: center;
+                transform: translate(0,100%);
+            }
+            .mask-door:hover:before {
+                opacity: 0.6;
+                transform: translate(0,0);
+            }
+            .mask-door:hover::after{
+                opacity: 0.6;
+                transform: translate(0,0);
+            }
+		</style>
+	</head>
+	<body>
+		<div class="mask-door" data-title="遮罩条">
+			<img src="./../public/img/ia_100000002.jpg" alt="" />
+		</div>
+	</body>
+</html>

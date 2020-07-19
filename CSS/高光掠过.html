@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			.highlight-box {
+				width: 300px;
+				height: 120px;
+				overflow: hidden;
+				position: relative;
+			}
+			.highlight-box img {
+				width: 100%;
+			}
+			.highlight-box::before {
+				display: block;
+				content: "";
+				width: 50%;
+				height: 300%;
+				background: -webkit-linear-gradient(
+					left,
+					rgba(255, 255, 255, 0.05) 20%,
+					rgba(255, 255, 255, 0.6) 65%,
+					rgba(255, 255, 255, 0.05) 100%
+				);
+				position: absolute;
+				z-index: 2;
+				transform: rotate(-45deg);
+				top: -200%;
+				left: -100%;
+			}
+			.highlight-box:hover::before {
+                animation: crossed 0.5s linear;
+			}
+			@keyframes crossed {
+				0% {
+					top: -200%;
+					left: -100%;
+				}
+				100% {
+					top: -50px;
+					left: 100%;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="highlight-box">
+			<img src="./../public/img/ia_100000000.jpg" alt="" />
+		</div>
+	</body>
+</html>

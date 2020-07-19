@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			.box {
+				position: absolute;
+				top: 30%;
+				left: 200px;
+				margin-top: -150px;
+				-webkit-transition: transform 0.6s;
+				transition: transform 0.6s;
+			}
+			.cude {
+				width: 200px;
+				height: 200px;
+				position: relative;
+				transform-origin: 50% 50% 0;
+				transform-style: preserve-3d;
+				transform: rotateX(30deg) rotateY(30deg);
+				animation: rotate 2s linear infinite;
+			}
+			.surface {
+				position: absolute;
+				width: 200px;
+				height: 200px;
+				text-align: center;
+				line-height: 200px;
+				font-size: 60px;
+				background-color: #666666;
+				opacity: 0.7;
+				color: #ffffff;
+				border: 1px solid #ffffff;
+			}
+			.front {
+				transform: rotateY(0) translateZ(100px);
+			}
+			.back {
+				transform: translateZ(-100px) rotateY(180deg);
+			}
+
+			.left {
+				transform: rotateY(-90deg) translateZ(100px);
+			}
+
+			.right {
+				transform: rotateY(90deg) translateZ(100px);
+			}
+
+			.top {
+				transform: rotateX(90deg) translateZ(100px);
+			}
+
+			.bottom {
+				transform: rotateX(90deg) translateZ(-100px);
+			}
+			.cude:hover .front {
+				transform: rotateY(0) translateZ(150px);
+			}
+			.cude:hover  .back {
+				transform: translateZ(-150px) rotateY(180deg);
+			}
+
+			.cude:hover  .left {
+				transform: rotateY(-90deg) translateZ(150px);
+			}
+
+			.cude:hover  .right {
+				transform: rotateY(90deg) translateZ(150px);
+			}
+
+			.cude:hover  .top {
+				transform: rotateX(90deg) translateZ(150px);
+			}
+
+			.cude:hover  .bottom {
+				transform: rotateX(90deg) translateZ(-150px);
+			}
+
+			@-webkit-keyframes rotate {
+				from {
+					transform: rotateX(0deg) rotateY(0deg);
+				}
+				to {
+					transform: rotateX(360deg) rotateY(360deg);
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<div class="cude">
+				<div class="front surface">正面</div>
+				<div class="surface left">左面</div>
+				<div class="surface right">右面</div>
+				<div class="surface bottom">底面</div>
+				<div class="surface top">顶面</div>
+				<div class="surface back">背面</div>
+			</div>
+		</div>
+	</body>
+</html>

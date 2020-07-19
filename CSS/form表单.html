@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			.input-field,
+			.input-field * {
+				box-sizing: border-box;
+			}
+			.input-field {
+				position: relative;
+				width: 200px;
+				margin: 20px 50px;
+			}
+			.input-field input {
+				background-color: transparent;
+				border: none;
+				height: 35px;
+				width: 100%;
+				padding: 0;
+				box-shadow: none;
+				outline: none;
+			}
+			.input-field input + span {
+				position: absolute;
+				top: 100%;
+				left: 0;
+				display: inline-block;
+				max-width: 100%;
+				width: 100%;
+				height: 1px;
+				border-bottom: 1px solid #d9d9d9;
+			}
+			.input-field span:after {
+				content: "";
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				height: 2px;
+				background: #2196f3;
+                transform: scale(0);
+                transition: all 0.2s ease-out;
+			}
+			.input-field input:focus + span:after {
+				transform: scale(1);
+			}
+		</style>
+	</head>
+	<body>
+		<div class="input-field">
+			<input id="last_name" type="text" placeholder="账号" />
+			<span></span>
+		</div>
+	</body>
+</html>
