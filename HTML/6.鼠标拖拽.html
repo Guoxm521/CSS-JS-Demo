@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .box {
+            width: 200px;
+            height: 200px;
+            background-color: orange;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+    </div>
+    <script>
+        const box = document.querySelector('.box');
+        box.onmousedown = function(e) {
+            // 取消鼠标右键点击
+            if(e.button === 2) {
+                e.preventDefault();
+                return false;
+            }
+            const boxX = e.pageX - box.offsetLeft;
+            const boxY = e.pageY - box.offsetTop;
+
+            box.onmousemove = function(e) {
+                box.style.left = e.pageX - boxX +'px';
+                box.style.top = e.pageY - boxY +'px';
+            }
+        }
+        box.onmouseup = function() {
+            box.onmousemove = null;
+        }
+    </script>
+</body>
+</html>

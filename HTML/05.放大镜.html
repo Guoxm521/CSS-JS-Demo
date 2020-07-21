@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			tyle > * {
+				margin: 0;
+				padding: 0;
+			}
+
+			.box {
+				width: 350px;
+				height: 350px;
+				margin: 100px;
+				border: 1px solid #ccc;
+				position: relative;
+			}
+
+			.big {
+				width: 400px;
+				height: 400px;
+				position: absolute;
+				top: 0;
+				left: 360px;
+				border: 1px solid #ccc;
+				overflow: hidden;
+				display: none;
+			}
+
+			.big img {
+				position: absolute;
+			}
+
+			.mask {
+				width: 175px;
+				height: 175px;
+				background: rgba(255, 255, 0, 0.4);
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				cursor: move;
+				display: none;
+			}
+
+			.small {
+				position: relative;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box" id="box">
+			<div class="small">
+				<img src="./../public/img/small.jpg" width="350" alt="" />
+				<div class="mask"></div>
+			</div>
+			<div class="big">
+				<img src="./../public/img/big.jpg" width="800" alt="" />
+			</div>
+		</div>
+		<script>
+			// 盒子
+			const box = document.querySelector(".box");
+			//小图
+			const smallimg = document.querySelector(".small>img");
+			// mask
+			const mask = document.querySelector(".mask");
+			// 大图盒子
+			const bigbox = document.querySelector(".big");
+			// 大图图片
+			const bigimg = document.querySelector(".big>img");
+
+			box.onmouseenter = function () {
+				mask.style.display = "block";
+				bigbox.style.display = "block";
+			};
+			box.onmouseleave = function () {
+				mask.style.display = "none";
+				bigbox.style.display = "none";
+			};
+
+			box.onmousemove = function (e) {
+				e = e || window.event;
+
+				//鼠标相对浏览器的位置
+				var pageX = e.pageX;
+				var pageY = e.pageY;
+
+				var maskX = pageX - box.offsetLeft;
+				var maskY = pageY - box.offsetTop;
+				// 让鼠标出现在mask的中心点
+				maskX = maskX - mask.offsetWidth / 2;
+				maskY = maskY - mask.offsetHeight / 2;
+				// 把mask限制在盒子里
+				maskX = maskX < 0 ? 0 : maskX;
+				maskY = maskY < 0 ? 0 : maskY;
+				maskX =
+					maskX > box.offsetWidth - mask.offsetWidth
+						? box.offsetWidth - mask.offsetWidth
+						: maskX;
+				maskY =
+					maskY > box.offsetHeight - mask.offsetHeight
+						? box.offsetHeight - mask.offsetHeight
+						: maskY;
+				mask.style.top = maskY + "px";
+				mask.style.left = maskX + "px";
+
+				//大图移动v
+				var maskMax = box.offsetWidth - mask.offsetWidth;
+				var bigImgMax = bigimg.offsetWidth - bigbox.offsetWidth;
+
+				var bigimgX = (maskX * bigImgMax) / maskMax;
+				var bigimgY = (maskY * bigImgMax) / maskMax;
+
+				bigimg.style.left = -bigimgX + "px";
+				bigimg.style.top = -bigimgY + "px";
+			};
+		</script>
+	</body>
+</html>
