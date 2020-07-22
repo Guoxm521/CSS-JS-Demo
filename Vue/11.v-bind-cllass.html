@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			.border {
+				border: 10px solid #000;
+			}
+
+			.font {
+				font-size: 30px;
+			}
+			.red {
+				color: red;
+			}
+
+			.green {
+				color: green;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<ul>
+				<li v-bind:class="classname" v-for="(item,index) in list">{{item}}</li>
+			</ul>
+			<p>-------------------------------------------</p>
+			<ul>
+				<li v-bind:class="{red:index%2===0,green:index%2===1}" v-for="(item,index) in list">{{item}}</li>
+			</ul>
+		</div>
+		<script src="./public/vue.js"></script>
+		<script>
+			const vm = new Vue({
+				el: "#app",
+				data: {
+					list: ["张三", "李四", "王屋", "赵六", "周七"],
+					classname: {
+						border: false,
+						font: true,
+					},
+				},
+			});
+		</script>
+	</body>
+</html>

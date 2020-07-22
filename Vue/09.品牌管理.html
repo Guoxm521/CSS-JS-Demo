@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            #app {
+                margin: 100px;
+            }
+            table {
+                border-collapse: collapse;
+                margin-top: 10px;
+            }
+            td {
+                border: 1px solid #cccccc;
+                padding: 5px;
+            }
+            tbody tr:nth-child(2n+1) {
+                background-color: #eeeeee;
+            }
+        </style>
+	</head>
+	<body>
+		<div id="app">
+            <label for="">名称：<input type="text" name="name" v-model='name'></label>
+            <label for="">描述：<input type="text" name='desc' v-model="desc"></label>
+            <label for=""><button @click="add">添加</button></label>
+            <table>
+                <thead>
+                    <tr>
+                        <td>序号</td>
+                        <td>名称</td>
+                        <td>描述</td>
+                        <td>创建时间</td>
+                        <td>操作</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item,index) in list">
+                        <td>{{index+1}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.desc}}</td>
+                        <td>{{item.time}}</td>
+                        <td><a href="" @click.prevent='del(item.id)' >删除</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <script src="./public/vue.js"></script>
+        <script>
+            const vm = new Vue({
+                el:'#app',
+                data:{
+                    name:"",
+                    desc:"",
+                    list:[
+                        {id:1,name:'悍马',desc:'你的出生决定你买不买的起',time:new Date().getTime()},
+                        {id:2,name:'宾利',desc:'你的出生决定你买不买的起',time:new Date().getTime()},
+                        {id:3,name:'宝马',desc:'你的出生决定你买不买的起',time:new Date().getTime()},
+                        {id:4,name:'奥迪',desc:'你的出生决定你买不买的起',time:new Date().getTime()},
+                        {id:5,name:'大众',desc:'你的出生决定你买不买的起',time:new Date().getTime()},
+                        {id:6,name:'红旗',desc:'你的出生决定你买不买的起',time:new Date().getTime()},
+                    ]
+                },
+                methods: {
+                    add() {
+                        const data = {
+                            id:this.list[this.list.length -1].id+1,
+                            name:this.name,
+                            desc:this.desc,
+                            time:new Date().getTime()
+                        }
+                        this.list.push(data);
+                        this.desc = "";
+                        this.name=""
+                    },
+                    del(id) {
+                      let index = this.list.findIndex(item => item.id===id);
+                      this.list.splice(index,1);
+                    }
+                },
+            })
+        </script>
+	</body>
+</html>

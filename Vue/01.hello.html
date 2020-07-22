@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./public/vue.js"></script>
+</head>
+<body>
+    <div id="app">{{msg}}</div>
+    <div id="app2">
+        <span v-bind:title="message">
+            dasdas
+        </span>
+    </div>
+    <script>
+        var app = new Vue({
+            el:'#app',
+            data() {
+                return {
+                    msg:'hello vue'
+                }
+            },
+        })
+        var app2 = new Vue({
+            el:'#app2',
+            data() {
+                return {
+                    message:'页面加载于 ' + new Date().toLocaleString()
+                }
+            },
+        })
+    </script>
+</body>
+</html>

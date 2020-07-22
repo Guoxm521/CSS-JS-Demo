@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=p, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<input type="text" />
+		<p></p>
+		<script>
+			const data = {
+				msg: "我是张三",
+			};
+			const input = document.querySelector("input");
+			const p = document.querySelector("p");
+
+			input.value = data.msg;
+			p.innerText = data.msg;
+
+			input.oninput = function () {
+				data.msg = this.value;
+			};
+
+            let temp = data.msg;
+            Object.defineProperty(data,'msg',{
+                get:function() {
+                    console.log(1)
+                    return temp
+                },
+                set:function(value) {
+                    console.log(2)
+                    temp = value;
+                    input.value = temp
+                    p.innerText = temp
+                }
+            })
+		</script>
+	</body>
+</html>

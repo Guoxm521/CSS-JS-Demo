@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div id="app">
+			<button @click="start">开始</button>
+			<button @click="stop">结束</button>
+			<h1>{{msg}}</h1>
+		</div>
+		<script src="./public/vue.js"></script>
+		<script>
+			const vm = new Vue({
+				el: "#app",
+				data: {
+					msg: "我自横刀向天去，去留肝胆两昆仑----",
+                    timeId:''
+				},
+				methods: {
+					start() {
+                        if(this.timeId) return
+                        this.timeId= setInterval(()=>{
+                            let first = this.msg[0];
+                            this.msg = this.msg.slice(1)+first
+                        },300)
+                    },
+                    stop() {
+                        clearInterval(this.timeId)
+                        this.timeId = ''
+                    }
+				},
+			});
+		</script>
+	</body>
+</html>

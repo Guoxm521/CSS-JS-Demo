@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div id="app">
+			<p>{{msg}}</p>
+			<button @click="clickFn" @mouseenter="clickFn">点我！！！！</button>
+        </div>
+        
+        <p>-------------------------------------------</p>
+        
+        <div id="app2">
+            <button v-on:click="reverse">点我翻转</button v-on:click="reverse">
+            <p>{{msg}}</p>
+        </div>
+
+		<script src="./public/vue.js"></script>
+		<script>
+			const vm = new Vue({
+				el: "#app",
+				data: {
+					msg: "hello vue",
+				},
+				methods: {
+					clickFn() {
+						console.log("点我呀");
+						console.log(this.msg);
+					},
+				},
+			});
+            const vm2 = new Vue({
+                el:'#app2',
+                data:{
+                    msg:'好好学习，天天向上'
+                },
+                methods:{
+                    reverse() {
+                        this.msg = this.msg.split('').reverse().join('');
+                    }
+                }
+            })
+		</script>
+	</body>
+</html>

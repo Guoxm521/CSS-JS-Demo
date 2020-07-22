@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <input type='number' v-model="n1"> +
+        <input type="number" v-model="n2"> =
+        <span>{{ sum }}</span>
+    
+      </div>
+    <script src="./public/vue.js"></script>
+    <script>
+        const vm  = new Vue({
+            el:'#app',
+            data:{
+                n1:0,
+                n2:0,
+            },
+            computed: {
+                sum:function() {
+                    return +this.n1 + +this.n2
+                }
+            },
+            
+        })
+    </script>
+</body>
+</html>

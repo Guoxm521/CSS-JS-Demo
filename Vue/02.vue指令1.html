@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <h3>插值表达式</h3>
+        {{msg.toUpperCase()}}
+        {{msg +100}}
+        <p>{{[1,2,3].join('-')}}</p>
+    </div>
+    <p>=============================================</p>
+    <div id="app2">
+        <h3>v-bind</h3>
+        <a v-bind:title='title' v-bind:class='classname'>我是一个连接</a>
+    </div>
+    <p>=============================================</p>
+    <div id="app3">
+        <h3>v-model</h3>
+        <p>v-moldel 用在表单元素上面 ，跟data中的msg关联起来</p>
+        <p>{{msg}}</p>
+        <input type="text" v-model='msg'>
+    </div>
+    <script src="./public/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el:'#app',
+            data() {
+                return {
+                    msg:'Hello'
+                }
+            },
+        });
+        
+        const app2 = new Vue({
+            el:'#app2',
+            data() {
+                return {
+                    title:'我是标题',
+                    classname:'classname'
+                }
+            },
+        })
+
+        const app3 = new Vue({
+            el:'#app3',
+            data:{
+                msg:'hello vue'
+            }
+        })
+    </script>
+</body>
+</html>

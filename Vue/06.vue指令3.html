@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <ul>
+            <li v-for='item in list'>{{item.title}}------{{item.text}}</li>
+        </ul>
+    </div>
+    <script src="./public/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                msg:'你好呀',
+                list:[
+                { id: 5, title: '忘情水', url: '刘德华', text: '给我一杯忘情水' },
+                { id: 4, title: '忘情水', url: '刘德华', text: '给我一杯忘情水' },
+                { id: 1, title: '温柔', url: '五月天', text: '不打扰，就是我的温柔' },
+                { id: 2, title: '蜗牛', url: '周杰伦', text: '我要一步一步往上爬' },
+                { id: 3, title: '认真的雪', url: '薛之谦', text: '雪下得那么深' }
+                ]
+            }
+        })
+    </script>
+</body>
+</html>

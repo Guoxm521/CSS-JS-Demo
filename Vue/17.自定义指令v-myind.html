@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div id="app">
+            <span v-mybind:title='msg'>nihao</span>
+        </div>
+		<script src="./public/vue.js"></script>
+		<script>
+			Vue.directive("mybind", {
+				bind(el, binding) {
+					el.setAttribute(binding.arg, binding.value);
+				},
+				update(el, binding) {
+					el.setAttribute(binding.arg, binding.value);
+				},
+			});
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					msg: "hello vue",
+					imgUrl: "01.gif",
+				},
+			});
+		</script>
+	</body>
+</html>

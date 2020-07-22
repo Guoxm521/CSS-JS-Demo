@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app1">
+        <div v-text='msg'></div>
+        <div v-html='text'></div>
+    </div>
+    <p>=============================</p>
+    <div id="app2">
+        <h4>遍历数组</h4>
+        <p v-for="(v,i) in list">{{i}}-----{{v}}</p>
+        <h4>=======</h4>
+        <p v-for="v in list">{{v}}</p>
+        <h4>遍历对象</h4>
+        <p v-for="v in car">{{v}}</p>
+        <p v-for="(v,i,k) in car">{{k}}-----{{i}}-------{{v}}</p>
+    </div>
+    <script src="./public/vue.js"></script>
+    <script>
+        const app1 = new Vue({
+            el:'#app1',
+            data:{
+                msg:'<h3>我的天呐呐呐呐呐</h3>',
+                text:'<h1>你好再见呀</h1>'
+            }
+        })
+        const app2 = new Vue({
+            el:'#app2',
+            data:{
+                msg:'hello',
+                list:['张飞','关羽','刘贝贝','赵云','黄忠','马超'],
+                car:{
+                    brand:'宝马',
+                    color:'yellow',
+                    price:1000
+                }
+            }
+        })
+    </script>
+</body>
+</html>

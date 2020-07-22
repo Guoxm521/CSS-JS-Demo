@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div id="app">
+			<p v-cctext="msg"></p>
+		</div>
+		<script src="./public/vue.js"></script>
+		<script>
+			Vue.directive("cctext", {
+				bind(el, binding) {
+					el.innerText = binding.value;
+				},
+				update(el, binding) {
+					el.innerText = binding.value;
+				},
+			});
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					msg: "hello vue",
+				},
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="msg" @keyup="fn">
+    </div>
+    <p>----------------------------------</p>
+    <div id="app2">
+        <h4>v-else</h4>
+        <p v-if="age>=18">可以泡酒吧</p>
+        <p v-else-if="age>=16">可以泡网吧</p>
+        <p v-else="age<16">在家吃鸡</p>
+    </div>
+    <script src="./public/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                msg:'hello'
+            },
+            methods: {
+                fn(e) {
+                    console.log(e.keyCode)
+                }
+            },
+        });
+        const app2 = new Vue({
+            el:'#app2',
+            data:{
+                msg:'hello',
+                isLogin:false,
+                age:13
+            }
+        })
+    </script>
+</body>
+</html>
