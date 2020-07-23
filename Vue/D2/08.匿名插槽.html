@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			.son1 {
+				width: 250px;
+				height: 120px;
+				background-color: pink;
+                margin-bottom: 15px;
+			}
+			span {
+				background-color: black;
+				color: #ffffff;
+				display: inline-block;
+				width: 100%;
+			}
+			button {
+				float: right;
+				margin-right: 15px;
+			}
+			main {
+				padding: 25px;
+			}
+		</style>
+	</head>
+	<body>
+        <div id="app">
+            <son>
+                nihao
+            </son>
+            <son>
+                我高
+            </son>
+        </div>
+		<script src="./../vue.js"></script>
+		<script>
+			Vue.component("son", {
+				template: `
+                    <div class="son1">
+                        <span><slot></slot></span>
+                        <main><slot></slot></main>
+                        <button>确定</button>
+                    </div>
+            `,
+            
+            });
+            const vm = new Vue({
+                el:'#app'
+            })
+		</script>
+	</body>
+</html>

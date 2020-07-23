@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			.son1 {
+				width: 250px;
+				height: 120px;
+				background-color: pink;
+                margin-bottom: 15px;
+			}
+			span {
+				background-color: black;
+				color: #ffffff;
+				display: inline-block;
+				width: 100%;
+			}
+			button {
+				float: right;
+				margin-right: 15px;
+			}
+			main {
+				padding: 25px;
+			}
+		</style>
+	</head>
+	<body>
+        <div id="app">
+           <component :is='con'></component> 
+        </div>
+		<script src="./../vue.js"></script>
+		<script>
+			Vue.component("son1", {
+				template: `
+                    <div class="son1">
+                        我是登录组件
+                    </div>
+            `,
+            
+            });
+            Vue.component("son2", {
+				template: `
+                    <div class="son1">
+                        我是注册组件
+                    </div>
+            `,
+            
+            });
+            const vm = new Vue({
+                el:'#app',
+                data() {
+                    return {
+                        con:'son2'
+                    }
+                },
+            })
+		</script>
+	</body>
+</html>

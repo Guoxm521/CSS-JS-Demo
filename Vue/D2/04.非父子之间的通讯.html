@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <jack></jack>
+        <rose></rose>
+    </div>
+    <script src="./../vue.js"></script>
+    <script>
+        const bus = new Vue();
+        Vue.component('jack',{
+            template:`
+            <div>
+                我是Jack,我想对rose说<button @click="send">发送</button>
+            </div>
+            `,
+            data() {
+                return {
+                    msg:'rose,rose,我爱你'
+                }
+            },
+            methods: {
+                send:function() {
+                    bus.$emit('get',this.msg)
+                }
+            },
+        })
+        Vue.component('rose',{
+            template:`
+            <div>
+                我是rose,jack对我说{{msg}}
+            </div>
+            `,
+            data() {
+                return {
+                    msg:''
+                }
+            },
+            created() {
+                bus.$on('get',msg=>{
+
+                    this.msg = msg;
+                    console.log('jack对我说话了'+msg)
+                })
+            },
+        })
+        const vm = new Vue({
+            el:'#app',
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            .son1 {
+                width: 200px;
+                height: 50px;
+                background-color: pink;
+                box-sizing: border;
+                padding: 50px;
+            }
+            button {
+                margin-top: 15px;
+            }
+        </style>
+	</head>
+	<body>
+		<div id="app">
+            <son1 @get="get"></son1>
+            <ul>
+                <li v-for="(v,k) in list">{{k}}------------{{v}}</li>
+            </ul>
+        </div>
+
+		<script src="./../vue.js"></script>
+		<script>
+			Vue.component("son1", {
+				template: `
+                    <div class="son1">
+                        <input ref='input' type="text" v-model="msg">
+                        <br>
+                        <button @click="send">提交</button>
+                    </div>
+                 `,
+                 data() {
+                     return {
+                         msg:''
+                     }
+                 },
+                 methods:{
+                    send() {
+                        this.$emit('get',this.msg);
+                    }
+                 }
+            });
+            const vm = new Vue({
+                el:'#app',
+                data:{
+                    list:['蚂蚁上树','红烧肉','酸辣白菜']
+                },
+                methods: {
+                    get(msg) {
+                        this.list.push(msg);
+                        console.log('我是父级提供的方法'+msg)
+                    }
+                },
+            })
+		</script>
+	</body>
+</html>

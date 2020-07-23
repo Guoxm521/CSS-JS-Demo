@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="./../animate.css">
+	</head>
+	<body>
+		<div id="app">
+            <button @click='isShow=!isShow'>切换</button>
+            <transition enter-active-class="animated bounceInLeft" leave-active-class="animated bounceInRight">
+                <div v-show='isShow'>我是一个盒子</div>
+            </transition>
+		</div>
+		<script src="./../vue.js"></script>
+		<script>
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					msg: "hello vue",
+					isShow: true,
+				},
+			});
+		</script>
+	</body>
+</html>

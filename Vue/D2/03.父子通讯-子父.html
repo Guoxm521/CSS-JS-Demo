@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .son {
+            background-color: pink;
+            height: 150px;
+            width: 300px;
+            padding: 50px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <son @get="get"></son>
+        <ul>
+            <li v-for="(item,index) in list">{{index}}-------------{{item}}</li>
+        </ul>
+    </div>
+    <script src="./../vue.js"></script>
+    <script>
+        Vue.component('son',{
+            template:`
+                <div class="son">
+                    <input type="text" v-model="list">
+                    <button @click="send">按钮</button>   
+                </div>
+            `,
+            data() {
+                return {
+                    msg:'我是子组件',
+                    list:''
+                }
+            },
+            methods: {
+                send:function() {
+                    this.$emit('get',this.list)
+                }
+            },
+        });
+        const vm  = new Vue({
+            el:'#app',
+            data:{
+                list:['赵云','刘备','张飞','关羽']
+            },
+            methods: {
+              get:function(list) {
+                  console.log("我是父组件注册的事件"+list)
+                  this.list.push(list);
+              }  
+            },
+        })
+    </script>
+</body>
+</html>

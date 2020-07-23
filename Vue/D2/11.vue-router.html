@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <router-link to="/home">首页</router-link>
+        <router-link to="/friend">朋友</router-link>
+        <router-link to="/music">音乐</router-link>
+        <router-view></router-view>
+    </div>
+    
+    <script src="./../vue.js"></script>
+    <script src="./../vue-router.js"></script>
+    <script>
+        const home = {
+           template:'<div>我是首页的内容</div>'
+        };
+        const friend = {
+            template:`
+                <div>我的朋友组件</>
+            `
+        };
+        const music = {
+            template:`
+                <div>我的音乐组件</>
+            `
+        };
+         const router = new VueRouter({
+            routes:[
+                {path:'/',redirect:'/home'},
+                {path:'/home',component:home},
+                {path:'/friend',component:friend},
+                {path:'/music',component:music},
+            ]
+        })
+        const app = new Vue({
+            router:router
+        }).$mount('#app')
+    </script>
+</body>
+</html>

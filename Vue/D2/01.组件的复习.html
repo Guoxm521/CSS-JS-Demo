@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p>{{msg}}</p>
+        <hello> </hello>
+    </div>
+    <script src="./../D1/public/vue.js"></script>
+    <script>
+        Vue.component('hello', {
+            template: `
+           <div>
+            <h1>你好再见呀</h1>
+            <h2>{{msg}}</h2>
+           </div>
+            `,
+            data() {
+                return {
+                    msg:'我的天呐'
+                }
+            },
+            created() {
+                console.log('我被创建了')
+            },
+        });
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                msg:'hello vue'
+            }
+        })
+    </script>
+</body>
+</html>

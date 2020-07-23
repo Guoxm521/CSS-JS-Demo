@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <son :info='info' :list='list'></son>
+    </div>
+    <script src="./../vue.js"></script>
+    <script>
+        Vue.component('son', {
+            template:`
+            <div>
+                我是子组件
+                <ul>
+                    <li v-for="(v,k) in list">{{k}}----{{v}}</li>
+                </ul>
+                <h2>{{info.name}}</h2>
+            </div>
+            `,
+            data() {
+                return {
+                    msg:'我是子组件'
+                }
+            },
+            props:['info','list']
+        })
+        const vm = new Vue({
+            el:"#app",
+            data:{
+                info:{
+                    name:'zhansgan',
+                    age:18,
+                    sex:'nan'
+                },
+                list:['蚂蚁上树','红烧肉','酸辣白菜']
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        {{msg|a}}
+        <son :msg='msg' :list="list"></son>
+    </div>
+    
+    <script src="./../vue.js"></script>
+    <script>
+        Vue.component('son', {
+            template:`
+                <div>
+                    <h1>{{msg}}</h1>
+                    <ul><li v-for="v in list">{{v}}</li></ul>    
+                </div>
+            `,
+            data() {
+                return {
+                    a:'aaaaaaaaaaaaaaaaaaaaaaaa'      
+                }
+            },
+            created() {
+                console.log('组件被创建了')
+            },
+            props:['msg','list'],
+        })
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                msg:'hello  我是你的父元素呀',
+                list:['刘备','张飞','关羽','赵云']
+            },
+            filters:{
+                // 过滤器
+                a:function(value) {
+                    return value.toUpperCase()
+                }
+            }
+        });
+        
+    </script>
+</body>
+</html>
