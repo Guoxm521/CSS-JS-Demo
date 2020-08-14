@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        meter {
+            width: 500px;
+        }
+        body {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <meter min="0" max="500" value="350"></meter>
+    <input type="color">
+    <script>
+        const h = 10
+        // setInterval(()=>{
+        //     document.querySelector('meter').value = document.querySelector('meter').value - h;
+        // },1000)
+        document.querySelector('input[type="color"]').onchange = function() {
+            document.querySelector('body').style.background = document.querySelector('input[type="color"]').value
+        }
+        console.log()
+    </script>
+</body>
+</html>
