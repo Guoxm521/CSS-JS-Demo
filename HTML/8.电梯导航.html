@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			li {
+				list-style: none;
+			}
+			.container {
+				width: 1080px;
+				margin: 0 auto;
+			}
+			.box {
+				width: 100%;
+				height: 700px;
+				background-color: pink;
+			}
+			.menu {
+				position: fixed;
+				top: 180px;
+				left: 70px;
+			}
+			li {
+				height: 40px;
+				background-color: #f00056;
+				padding: 5px 15px;
+				line-height: 40px;
+				border-bottom: 1px solid #eeeeee;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="menu" style="display: none;">
+			<li>家用电器</li>
+			<li>手机通讯</li>
+			<li>电脑办公</li>
+			<li>精品家具</li>
+		</div>
+		<div class="container">
+			<h3>家用电器</h3>
+			<div class="box"></div>
+			<h3>手机通讯</h3>
+			<div class="box"></div>
+			<h3>电脑办公</h3>
+			<div class="box"></div>
+			<h3>精品家具</h3>
+			<div class="box"></div>
+        </div>
+        
+		<script>
+            const menu = document.querySelector('.menu')
+            document.querySelectorAll('h3').forEach(item => {
+                console.log(item.offsetTop)
+            })
+            // 左侧列表的显示隐藏
+            window.onscroll = function() {
+                if(window.scrollY > 500) {
+                    menu.style.display = 'block'
+                }else {
+                    menu.style.display = 'none'
+                }
+            }
+        </script>
+	</body>
+</html>

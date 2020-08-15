@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>防抖</title>
+	</head>
+	<body>
+		<button class="button1">点击1</button>
+		<button class="button2">点击2</button>
+		<script>
+			const button1 = document.querySelector(".button1");
+			const button2 = document.querySelector(".button2");
+
+			// 简版版本
+			let i = 0;
+			var timer = null;
+			button1.onclick = function () {
+				if (timer !== null) clearTimeout(timer);
+				timer = setTimeout(() => {
+					console.log("你好嘢" + "  " + i);
+					i += 1;
+				}, 2000);
+			};
+
+			// 闭包封装
+			function debounce(fn, delay) {
+				var timer = null; // 声明计时器
+				return function () {
+					var context = this,
+						args = arguments;
+					clearTimeout(timer);
+					timer = setTimeout(function () {
+						fn.apply(context,args)
+					}, delay);
+				};
+			}
+			function fn() {
+				console.log(23)
+			}
+			button2.onclick = debounce(fn, 1000);
+		</script>
+	</body>
+</html>

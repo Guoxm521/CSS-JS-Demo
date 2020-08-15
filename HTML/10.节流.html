@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>节流</title>
+    <style>
+        body {
+            height: 3000px;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        function showTop() {
+            var top = document.body.scrollTop
+            console.log("滚动位置：" + top)
+        }
+        // window.onscroll = function() {
+        //     showTop()
+        // }
+
+        // 节流
+        function throttle(fn,dealy) {
+            let valid = true
+            return function() {
+                if(!valid) {
+                    return false
+                }
+                valid = false
+                setTimeout(() => {
+                    fn()
+                    valid = true
+                },dealy)
+            }
+        }
+        function throttle2(fn,dealy) {
+            let start = 0;
+            return function() {
+                let now = Date.now();
+                if(now - start > dealy) {
+                    fn()
+                    start = now
+                }
+            }
+        }
+        window.onscroll = throttle2(showTop,1000)
+    </script>
+</body>
+</html>
