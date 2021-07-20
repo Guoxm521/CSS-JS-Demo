@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<canvas id="canvas" width="600" height="300"></canvas>
+		<canvas id="canvas12" width="600" height="300"></canvas>
+		<script>
+			/**  @type {HTMLCanvasElement} */
+			let canvas = document.querySelector("#canvas");
+			let context = canvas.getContext("2d");
+			let gradientLine = context.createLinearGradient(0, 0, 600, 200);
+			gradientLine.addColorStop(0, "red");
+			gradientLine.addColorStop(1, "green");
+			context.fillStyle = gradientLine;
+			context.fillRect(0, 0, 600, 300);
+
+			/* ------------------------ */
+
+			let canvas12 = document.querySelector("#canvas12");
+			let context12 = canvas12.getContext("2d");
+			let gradientRedial = context12.createRadialGradient(
+				300,
+				150,
+				0,
+				300,
+				150,
+				150
+			);
+			gradientRedial.addColorStop(0, "red");
+			gradientRedial.addColorStop(0.2, "red");
+			gradientRedial.addColorStop(0.2, "orange");
+			gradientRedial.addColorStop(0.4, "orange");
+			gradientRedial.addColorStop(0.4, "yellow");
+			gradientRedial.addColorStop(0.6, "yellow");
+			gradientRedial.addColorStop(0.6, "green");
+			gradientRedial.addColorStop(0.8, "green");
+			gradientRedial.addColorStop(0.8, "purple");
+			gradientRedial.addColorStop(1, "purple");
+			gradientRedial.addColorStop(1, "transparent");
+			// 矩形填充
+			context12.fillStyle = gradientRedial;
+			context12.fillRect(0, 0, 600, 300);
+		</script>
+	</body>
+</html>

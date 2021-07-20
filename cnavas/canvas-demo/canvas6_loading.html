@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<canvas id="canvas" width="40" height="40"></canvas>
+		<script>
+			/** @type {HTMLCanvasElement} */
+			let canvas = document.querySelector("#canvas");
+			let context = canvas.getContext("2d");
+			var center = [20, 20];
+			var length = 8,
+				offset = 8;
+			context.lineWidth = 4;
+			// context.lineCap = "butt";
+			context.lineCap = "round";
+
+			for (var angle = 0; angle < 360; angle += 45) {
+				// 正余弦
+				var sin = Math.sin((angle / 180) * Math.PI);
+				var cos = Math.cos((angle / 180) * Math.PI);
+				// 开始绘制
+				context.beginPath();
+				context.moveTo(center[0] + offset * cos, center[1] + offset * sin);
+				context.lineTo(
+					center[0] + (offset + length) * cos,
+					center[1] + (offset + length) * sin
+				);
+				context.strokeStyle =
+					"rgba(0,0,0," + (0.25 + (0.75 * angle) / 360) + ")";
+				context.stroke();
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			canvas {
+				display: block;
+				background-color: antiquewhite;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas"></canvas>
+		<script>
+			/** @type {HTMLCanvasElement} */
+
+			const canvas = document.querySelector("canvas");
+			const [width, height] = [window.innerWidth, window.innerHeight];
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+			const ctx = canvas.getContext("2d");
+			class Ball {
+				constructor(r, color = "#000") {
+					this.color = color;
+					this.r = r;
+					this.x = 0;
+					this.y = 0;
+				}
+				draw(ctx) {
+					ctx.save();
+					ctx.beginPath();
+					ctx.fillStyle = this.color;
+					ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+					ctx.fill();
+					ctx.restore();
+				}
+			}
+
+			let ball = new Ball(15);
+			ball.y = 50;
+			ball.x = width / 2;
+
+			let time = new Date();
+			// 重力
+			const gravity = 0.01;
+			// 弹力
+			const bounding = -0.8;
+			// 空气阻力
+			const air = -0.005;
+			// 水平摩擦力
+			const force = -0.01;
+
+			let vy = 0.3;
+			let vx = 0.3;
+			function animation() {
+				let now = new Date();
+				let diff = now - time;
+				time = now;
+				vy = vy + gravity + air;
+				vx += force;
+				ball.y += vy * diff;
+				ball.x += vx * diff;
+
+				if (ball.y + ball.r > height) {
+					ball.y = height - ball.r;
+					vy *= bounding;
+				}
+				//左侧碰撞
+				if (ball.x - ball.r < 0) {
+					ball.x = ball.r;
+					vx *= bounding;
+				}
+				//右侧碰撞
+				if (ball.x + ball.r > width) {
+					ball.x = width - ball.r;
+					vx *= bounding;
+				}
+			}
+
+			//渲染方法
+			!(function render() {
+				//设置动画
+				animation();
+				console.log(ball);
+				//擦除
+				ctx.clearRect(0, 0, width, height);
+				//绘图
+				ball.draw(ctx);
+				//递归调用render 函数
+				// console.log(31231)
+
+				if (vy != 0 && vx != 0) {
+					window.requestAnimationFrame(render);
+				}
+			})();
+			
+		</script>
+	</body>
+</html>

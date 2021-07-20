@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			html {
+				height: 100%;
+				overflow: hidden;
+			}
+			* {
+				margin: 0;
+				padding: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas"> 您的浏览器暂不致辞canvas动画 </canvas>
+		<script>
+			/** @type { HTMLCanvasElement}  */
+			const canvas = document.querySelector("#canvas");
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+			canvas.style.background = "antiquewhite";
+			const ctx = canvas.getContext("2d");
+
+			function render(color = "red") {
+				ctx.fillStyle = color;
+				ctx.lineWidth = 40;
+				ctx.fillRect(50, 250, 400, 200);
+				ctx.strokeRect(50, 250, 400, 200);
+				ctx.clearRect(50, 300, 400, 60);
+				ctx.beginPath();
+				ctx.moveTo(150, 400);
+				ctx.lineTo(350, 400);
+				ctx.stroke();
+
+				ctx.beginPath();
+				ctx.arc(150, 330, 20, 0, Math.PI * 2);
+				ctx.fill();
+
+				ctx.beginPath();
+				ctx.arc(350, 340, 20, -Math.PI, 0);
+				ctx.fill();
+
+				ctx.beginPath();
+				ctx.moveTo(50, 50);
+				ctx.bezierCurveTo(150, 50, 150, 250, 250, 250);
+				ctx.moveTo(450, 50);
+				ctx.bezierCurveTo(350, 50, 350, 250, 250, 250);
+				ctx.stroke();
+			}
+			let color = "red";
+			render(color);
+
+			canvas.addEventListener("mousemove", (event) => {
+				const { left, top } = canvas.getBoundingClientRect();
+				const x = event.clientX - left;
+				const y = event.clientY - top;
+				let curColor = "red";
+				if (x > 30 && x < 470 && y > 230 && y < 470) {
+					curColor = "black";
+				} else {
+					curColor = "red";
+				}
+				if (color !== curColor) {
+					color = curColor;
+					ctx.clearRect(0, 0, canvas.width, canvas.height);
+					render(color);
+				}
+			});
+		</script>
+	</body>
+</html>

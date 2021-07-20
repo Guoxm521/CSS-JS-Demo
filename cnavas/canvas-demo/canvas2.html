@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<canvas id="canvas" width="600" height="300"></canvas>
+		<button>下载图片</button>
+		<script>
+			/** @type {HTMLCanvasElement} */
+			let btn = document.querySelector("button");
+			let canvas = document.querySelector("#canvas");
+			let context = canvas.getContext("2d");
+
+			context.fillStyle = "white";
+			context.fillRect(0, 0, canvas.width, canvas.height);
+
+			context.font = "38pt Arial";
+			context.fillStyle = "red";
+			context.strokeStyle = "blue";
+			context.fillText(
+				"Hello Canvas",
+				canvas.width / 2 - 150,
+				canvas.height / 2 + 15
+			);
+			context.strokeText(
+				"Hello Canvas",
+				canvas.width / 2 - 150,
+				canvas.height / 2 + 15
+			);
+			var dataUrl = canvas.toDataURL("image/jpeg", 1);
+			btn.addEventListener(
+				"click",
+				(e) => {
+					download(dataUrl);
+				},
+				false
+			);
+			function download(data, nam = "") {
+				var a = document.createElement("a");
+				a.href = data;
+				a.download = name;
+				a.click();
+				a.remove();
+			}
+		</script>
+	</body>
+</html>

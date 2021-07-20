@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Document</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+
+			.box {
+				width: 100%;
+				min-height: 360px;
+				background-image: url("http://demo.sc.chinaz.com/Files/DownLoad/webjs1/201801/jiaoben5647/img/1.jpg");
+				background-repeat: no-repeat;
+				background-size: 30% 30%;
+				background-position: center;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 背景图 -->
+		<div id="box" class="box"></div>
+
+		<!-- 重置按钮 -->
+		<button id="btn">重置</button>
+
+		<script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js"></script>
+		<script>
+			// 画布信息
+			var myCanvasObject;
+			var ctx;
+
+			// 画布的宽高，根据背景图来获取
+			var width = document.getElementById("box").offsetWidth - 2;
+			var height = document.getElementById("box").offsetHeight;
+
+			// 鼠标或者手指事件的相关参数
+			var isDown = false; //鼠标是否按下标志
+			var pointerArr = []; //鼠标移动坐标数组
+			var xPointer = 0; //鼠标当前x坐标
+			var yPointer = 0; //鼠标当前y坐标
+
+			// 进入页面先初始化刮刮卡
+			init();
+
+			// 清空画布
+			$("#btn").on("click", function () {
+				if (myCanvasObject) {
+					//绘制黑色矩形 ，将蒙层充满
+					initBlackRect();
+				} else {
+					init();
+				}
+			});
+
+			// 绘制画布的黑色矩形
+			function initBlackRect() {
+				ctx.beginPath();
+				ctx.fillStyle = "#939393";
+				ctx.rect(0, 0, width, height);
+				ctx.closePath();
+				ctx.fill();
+			}
+
+			// 清空画布,重置点击次数
+			function clearRect() {
+				ctx.clearRect(0, 0, width, height);
+			}
+
+			// 初始化画布的方法
+			function init() {
+				if (!document.getElementById("myCanvas")) {
+					var canvas = document.createElement("canvas");
+					canvas.setAttribute("width", width + "px");
+					canvas.setAttribute("height", height + "px");
+					canvas.setAttribute("style", "border:1px solid green");
+					canvas.id = "myCanvas";
+					document.getElementById("box").appendChild(canvas);
+				}
+
+				myCanvasObject = document.getElementById("myCanvas");
+				ctx = myCanvasObject.getContext("2d");
+
+				//绘制黑色矩形
+				initBlackRect();
+
+				//pc，移动事件兼容写法
+				var hastouch = "ontouchstart" in window ? true : false,
+					tapstart = hastouch ? "touchstart" : "mousedown",
+					tapmove = hastouch ? "touchmove" : "mousemove",
+					tapend = hastouch ? "touchend" : "mouseup";
+
+				//鼠标按下
+				myCanvasObject.addEventListener(tapstart, function (event) {
+					var e = window.event || event; //2017-12-06
+					this.style.cursor = "move";
+					isDown = true;
+					xPointer = hastouch
+						? e.targetTouches[0].pageX
+						: e.clientX - this.offsetLeft;
+					yPointer = hastouch
+						? e.targetTouches[0].pageY
+						: e.clientY - this.offsetTop;
+					pointerArr.push([xPointer, yPointer]);
+					circleReset(ctx);
+				});
+
+				//鼠标按下后拖动
+				myCanvasObject.addEventListener(tapmove, function (event) {
+					var e = window.event || event; //2017-12-06
+					if (isDown) {
+						xPointer = hastouch
+							? e.targetTouches[0].pageX
+							: e.clientX - this.offsetLeft;
+						yPointer = hastouch
+							? e.targetTouches[0].pageY
+							: e.clientY - this.offsetTop;
+						pointerArr.push([xPointer, yPointer]);
+						circleReset(ctx);
+
+						// 在这里是通过像素点来计算，挂过的面积方式来的，比较好
+						handleFilledPercentage(getFilledPercentage());
+					}
+				});
+
+				//鼠标抬起取消事件
+				myCanvasObject.addEventListener(tapend, function (event) {
+					isDown = false;
+					pointerArr = [];
+				});
+
+				//圆形橡皮檫
+				function circleReset(ctx) {
+					ctx.save();
+					ctx.beginPath();
+					ctx.moveTo(pointerArr[0][0], pointerArr[0][1]);
+					ctx.lineCap = "round"; //设置线条两端为圆弧
+					ctx.lineJoin = "round"; //设置线条转折为圆弧
+					ctx.lineWidth = 60;
+					ctx.globalCompositeOperation = "destination-out";
+					if (pointerArr.length == 1) {
+						ctx.lineTo(pointerArr[0][0] + 1, pointerArr[0][1] + 1);
+					} else {
+						for (var i = 1; i < pointerArr.length; i++) {
+							ctx.lineTo(pointerArr[i][0], pointerArr[i][1]);
+							ctx.moveTo(pointerArr[i][0], pointerArr[i][1]);
+						}
+					}
+					ctx.closePath();
+					ctx.stroke();
+					ctx.restore();
+				}
+
+				// 计算已经刮过的区域占整个区域的百分比
+				function getFilledPercentage() {
+					let imgData = ctx.getImageData(0, 0, width, height);
+					// imgData.data是个数组，存储着指定区域每个像素点的信息，数组中4个元素表示一个像素点的rgba值
+					let pixels = imgData.data;
+					let transPixels = [];
+					for (let i = 0; i < pixels.length; i += 4) {
+						// 严格上来说，判断像素点是否透明需要判断该像素点的a值是否等于0，
+						// 为了提高计算效率，这儿设置当a值小于128，也就是半透明状态时就可以了
+						if (pixels[i + 3] < 128) {
+							transPixels.push(pixels[i + 3]);
+						}
+					}
+					return (
+						((transPixels.length / (pixels.length / 4)) * 100).toFixed(2) + "%"
+					);
+				}
+				// 设置阈值，去除灰色涂层
+				function handleFilledPercentage(percentage) {
+					percentage = percentage || 0;
+					if (parseInt(percentage) > 50) {
+						// 当像素点的个数超过  50% 时，清空画布，显示底图
+						ctx.clearRect(0, 0, width, height);
+					}
+				}
+			}
+		</script>
+	</body>
+</html>

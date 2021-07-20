@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>例子运动背景</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			canvas {
+				display: block;
+				background-color: antiquewhite;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas"></canvas>
+		<script>
+			/** @type {HTMLCanvasElement} */
+			const canvas = document.querySelector("canvas");
+			const ctx = canvas.getContext("2d");
+			let [width, height] = [window.innerWidth, window.innerHeight];
+			canvas.width = width;
+			canvas.height = height;
+
+			// 粒子参数对象
+			let dots = {
+				n: 500,
+				distance: 50,
+				d_radius: 100, //粒子距离鼠标点的距离
+				array: [], //保存n个圆形粒子对象
+			};
+			// 创建随机的颜色
+			function colorValue(min = 0) {
+				return Math.floor(Math.random() * 255 + min);
+			}
+			function mixConnect(c1, r1, c2, r2) {
+				return (c1 * r1 + c2 * r2) / (r1 + r2);
+			}
+			function createColorStyle(r, g, b) {
+				return `rgba(${r},${g},${b},1)`;
+			}
+			// 生成线条的颜色
+			function lineColor(dot1, dot2) {
+				let color1 = dot1.color,
+					color2 = dot2.color;
+				
+				let r = mixConnect(color1.r, dot1.radius, color2.r, dot2.radius);
+				let g = mixConnect(color1.g, dot1.radius, color2.g, dot2.radius);
+				let b = mixConnect(color1.b, dot1.radius, color2.b, dot2.radius);
+				return createColorStyle(Math.floor(r), Math.floor(g), Math.floor(b));
+			}
+
+			class Dots {
+				constructor() {
+					this.color = this.color();
+					this.x = this.width();
+					this.y = this.height();
+					this.r = this.radius();
+					this.vx = -0.5 + Math.random();
+					this.vy = -0.5 + Math.random();
+				}
+				draw() {
+					ctx.beginPath();
+					ctx.fillStyle = this.color;
+					ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2, false);
+					ctx.fill();
+				}
+
+				width() {
+					return Math.random() * width;
+				}
+				height() {
+					return Math.random() * height;
+				}
+				radius() {
+					return Math.random() * 5;
+				}
+				color() {
+					let r = colorValue();
+					let g = colorValue();
+					let b = colorValue();
+					return createColorStyle(r, g, b);
+				}
+			}
+
+			// 添加圆形例子
+			function createCircle() {
+				for (let i = 0; i < dots.n; i++) {
+					dots.array.push(new Dots());
+				}
+			}
+
+			// 绘制圆形例子
+			function drawDots() {
+				for (let i = 0; i < dots.array.length; i++) {
+					dots.array[i].draw();
+				}
+			}
+			function moveDots() {
+				for (let i = 0; i < dots.n; i++) {
+					let dot = dots.array[i];
+					if (dot.y < dot.r || dot.y + dot.r > height) {
+						dot.vx = dot.vx;
+						dot.vy = -dot.vy;
+					}
+					if (dot.x < dot.r || dot.x > width) {
+						dot.vx = -dot.vx;
+						dot.vy = dot.vy;
+					}
+					dot.x += dot.vx;
+					dot.y += dot.vy;
+				}
+			}
+
+			// 链接线条
+			function connectDots() {
+				let dx = 0;
+				let dy = 0;
+				let distance = dots.distance;
+				for (let j = 0; j < dots.n; j++) {
+					for (let i = 0; i < dots.n; i++) {
+						a = dots.array[j];
+						b = dots.array[i];
+						dx = Math.abs(a.x - b.x);
+						dy = Math.abs(a.y - b.y);
+						if (dx < distance && dy < distance) {
+							ctx.beginPath();
+							ctx.strokeStyle = lineColor(a, b);
+							ctx.moveTo(a.x, b.y);
+							ctx.lineTo(b.x, a.y);
+							ctx.closePath();
+							ctx.stroke();
+						}
+					}
+				}
+			}
+			createCircle();
+			!(function render() {
+				ctx.clearRect(0, 0, width, height);
+				moveDots();
+				connectDots();
+				drawDots();
+				window.requestAnimationFrame(render);
+			})();
+		</script>
+	</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<canvas id="canvas" width="240" height="120"></canvas>
+		<script>
+			/** @type {HTMLCanvasElement} */
+			let canvas = document.querySelector("#canvas");
+			let context = canvas.getContext("2d");
+
+			var offset = 0;
+			var draw = function () {
+				context.clearRect(0, 0, canvas.width, canvas.height);
+				context.setLineDash([8, 4]);
+				context.lineDashOffset = offset;
+				context.strokeRect(2, 2, 236, 116);
+			};
+			var run = function () {
+				offset += 0.5;
+				if (offset > 24) {
+					offset = 0;
+				}
+				draw();
+				requestAnimationFrame(run);
+			};
+
+			run();
+		</script>
+	</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<canvas width="900" height="600" id="canvas"></canvas>
+		<script>
+			/** @type {HTMLCanvasElement} */
+			let canvas = document.querySelector("#canvas");
+			let ctx = canvas.getContext("2d");
+
+			ctx.font = "bold 200px Arial";
+			ctx.shadowColor = "rgba(0,0,0,0.6)";
+			ctx.shadowOffsetY = 2;
+			ctx.shadowBlur = 4;
+
+			ctx.fillStyle = "#a76921";
+			ctx.fillText("canvas", 50, 150);
+
+			ctx.strokeStyle = "red";
+			ctx.lineWidth = 9;
+			ctx.strokeText("canvas", 50, 150);
+
+			ctx.strokeStyle = "#333";
+			ctx.lineWidth = 1;
+			ctx.setLineDash([5, 3]);
+			ctx.strokeText("canvas", 50, 150);
+		</script>
+	</body>
+</html>

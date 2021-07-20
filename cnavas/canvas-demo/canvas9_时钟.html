@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			canvas {
+				display: block;
+				background: antiquewhite;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas"></canvas>
+		<script>
+			/** @type {HTMLCanvasElement} */
+			let canvas = document.querySelector("#canvas");
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+
+			const ctx = canvas.getContext("2d");
+
+			const [redA, redB, yellow] = ["#db655c", "#d63d46", "#9f8d7d"];
+
+			const c = Math.PI * 2;
+
+			const { width, height } = canvas;
+
+			!(function render() {
+				ctx.clearRect(0, 0, width, height);
+				//绘图
+				draw();
+				requestAnimationFrame(render);
+			})();
+
+			function draw() {
+				//保存状态
+				ctx.save();
+				//整体偏移
+				ctx.translate(width / 2, height / 2);
+
+				//整体旋转
+				ctx.rotate(-Math.PI / 2);
+
+				// 钟表的表框-圆弧路径
+				//内框 - 145,20
+				ctx.save();
+				ctx.beginPath();
+				ctx.arc(0, 0, 145, 0, Math.PI * 2);
+				ctx.strokeStyle = redA;
+				ctx.lineWidth = 20;
+				ctx.stroke();
+				ctx.restore();
+				//外框 - 155,9
+				ctx.save();
+				ctx.beginPath();
+				ctx.arc(0, 0, 155, 0, Math.PI * 2);
+				ctx.strokeStyle = redB;
+				ctx.lineWidth = 9;
+				ctx.stroke();
+				ctx.restore();
+
+				//刻度 - 直线 - 90,120,4,15
+				ctx.save();
+				for (let i = 0; i < 4; i++) {
+					ctx.beginPath();
+					ctx.moveTo(90, 0);
+					ctx.lineTo(120, 0);
+					ctx.lineWidth = 15;
+					ctx.strokeStyle = redB;
+					ctx.stroke();
+					ctx.rotate(c / 4);
+				}
+				ctx.restore();
+
+				//小时 - 直线 - 90,120,12,6
+				ctx.save();
+				for (let i = 0; i < 12; i++) {
+					if (i % 3) {
+						ctx.beginPath();
+						ctx.moveTo(90, 0);
+						ctx.lineTo(120, 0);
+						ctx.lineWidth = 6;
+						ctx.strokeStyle = yellow;
+						ctx.stroke();
+					}
+					ctx.rotate(c / 12);
+				}
+				ctx.restore();
+
+				//分钟 - 直线 - 118,120,60,3
+				ctx.save();
+				for (let i = 0; i < 60; i++) {
+					if (i % 5) {
+						ctx.beginPath();
+						ctx.moveTo(118, 0);
+						ctx.lineTo(120, 0);
+						ctx.lineWidth = 3;
+						ctx.strokeStyle = yellow;
+						ctx.stroke();
+					}
+					ctx.rotate(c / 60);
+				}
+				ctx.restore();
+
+				//基于当前时间获取时、分、秒针的弧度
+				const { rh, rm, rs } = getRadian();
+
+				// 时针 - 直线 - 20，65，9
+				ctx.save();
+				ctx.rotate(rh);
+				ctx.beginPath();
+				ctx.moveTo(-20, 0);
+				ctx.lineTo(65, 0);
+				ctx.lineWidth = 9;
+				ctx.strokeStyle = yellow;
+				ctx.stroke();
+				ctx.restore();
+
+				// 分针 - 直线 - 28，80，4
+				ctx.save();
+				ctx.rotate(rm);
+				ctx.beginPath();
+				ctx.moveTo(-28, 0);
+				ctx.lineTo(80, 0);
+				ctx.lineWidth = 4;
+				ctx.strokeStyle = yellow;
+				ctx.stroke();
+				ctx.restore();
+
+				// 秒针 - 直线 - -30，88，2
+				ctx.save();
+				ctx.rotate(rs);
+				ctx.beginPath();
+				ctx.moveTo(-30, 0);
+				ctx.lineTo(88, 0);
+				ctx.lineWidth = 2;
+				ctx.strokeStyle = redB;
+				ctx.stroke();
+				ctx.restore();
+
+				//圆弧 10
+				ctx.save();
+				ctx.beginPath();
+				ctx.arc(0, 0, 10, 0, Math.PI * 2);
+				ctx.fillStyle = redB;
+				ctx.fill();
+				ctx.restore();
+
+				//还原上一次save 的状态
+				ctx.restore();
+			}
+			//基于当前时间获取时、分、秒针的弧度
+
+			function getRadian() {
+				const date = new Date();
+				let h = date.getHours();
+				if (h > 12) {
+					h -= 12;
+				}
+				let m = date.getMinutes();
+				let s = date.getSeconds();
+
+				const rs = (c * s) / 60;
+				const rm = (c * m) / 60 + (c * s) / 60 / 60;
+				const rh = (c * h) / 12 + (c * m) / 12 / 60 + (c * s) / 12 / 60 / 60;
+
+				return { rh, rm, rs };
+			}
+		</script>
+	</body>
+</html>
