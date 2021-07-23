@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			body {
+				margin: 0;
+				overflow: hidden;
+			}
+			#canvas {
+				background-color: antiquewhite;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas"></canvas>
+		<script>
+			/**@type {HTMLCanvasElement} */
+			const canvas = document.getElementById("canvas");
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+			const ctx = canvas.getContext("2d");
+			const img = new Image();
+			img.src = "./images/dog.jpg";
+			img.onload = function () {
+				const { width, height } = img;
+				ctx.drawImage(img, 0, 0);
+				const imgDt = ctx.getImageData(0, 0, width, height);
+				const data = imgDt.data;
+				for (let i = 0; i < data.length; i += 4) {
+					const [r, g, b] = [data[i], data[i + 1], data[i + 2]];
+					const lm = 0.299 * r + 0.587 * g + 0.114 * b;
+					data[i] = lm;
+					data[i + 1] = lm;
+					data[i + 2] = lm;
+				}
+				ctx.putImageData(imgDt, 800, 0);
+			};
+		</script>
+	</body>
+</html>

@@ -18,6 +18,7 @@
 	</head>
 	<body>
 		<canvas id="canvas"></canvas>
+		<!-- <script src="demo.js"></script> -->
 		<script>
 			/** @type {HTMLCanvasElement} */
 			const canvas = document.querySelector("canvas");
@@ -33,6 +34,10 @@
 				d_radius: 100, //粒子距离鼠标点的距离
 				array: [], //保存n个圆形粒子对象
 			};
+			let mousePosition = {
+				x: (30 * canvas.width) / 100,
+				y: (30 * canvas.height) / 100,
+			};
 			// 创建随机的颜色
 			function colorValue(min = 0) {
 				return Math.floor(Math.random() * 255 + min);
@@ -45,12 +50,19 @@
 			}
 			// 生成线条的颜色
 			function lineColor(dot1, dot2) {
+				// console.log(dot1);
+				// 				color: "rgba(183,0,209,1)"
+				// r: 3.416762217649044
+				// vx: 0.46093285723306754
+				// vy: -0.4771807944183979
+				// x: 392.99297956709694
+				// y: 169.89831254823676
 				let color1 = dot1.color,
 					color2 = dot2.color;
-				
-				let r = mixConnect(color1.r, dot1.radius, color2.r, dot2.radius);
-				let g = mixConnect(color1.g, dot1.radius, color2.g, dot2.radius);
-				let b = mixConnect(color1.b, dot1.radius, color2.b, dot2.radius);
+				let r = mixConnect(color1.r, dot1.r, color2.r, dot2.r);
+				let g = mixConnect(color1.g, dot1.r, color2.g, dot2.r);
+				let b = mixConnect(color1.b, dot1.r, color2.b, dot2.r);
+				// console.log(r, g, a);
 				return createColorStyle(Math.floor(r), Math.floor(g), Math.floor(b));
 			}
 
@@ -65,7 +77,12 @@
 				}
 				draw() {
 					ctx.beginPath();
-					ctx.fillStyle = this.color;
+
+					ctx.fillStyle = createColorStyle(
+						this.color.r,
+						this.color.g,
+						this.color.b
+					);
 					ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2, false);
 					ctx.fill();
 				}
@@ -83,7 +100,7 @@
 					let r = colorValue();
 					let g = colorValue();
 					let b = colorValue();
-					return createColorStyle(r, g, b);
+					return { r, g, b };
 				}
 			}
 
@@ -128,12 +145,18 @@
 						dx = Math.abs(a.x - b.x);
 						dy = Math.abs(a.y - b.y);
 						if (dx < distance && dy < distance) {
-							ctx.beginPath();
-							ctx.strokeStyle = lineColor(a, b);
-							ctx.moveTo(a.x, b.y);
-							ctx.lineTo(b.x, a.y);
-							ctx.closePath();
-							ctx.stroke();
+							let apx = Math.abs(a.x - mousePosition.x);
+							let apy = Math.abs(a.y - mousePosition.y);
+							let bpx = Math.abs(b.x - mousePosition.x);
+							let bpy = Math.abs(b.y - mousePosition.y);
+							if (apx < dots.d_radius && apy < dots.d_radius) {
+								ctx.beginPath();
+								ctx.strokeStyle = lineColor(a, b);
+								ctx.moveTo(a.x, a.y);
+								ctx.lineTo(b.x, b.y);
+								ctx.closePath();
+								ctx.stroke();
+							}
 						}
 					}
 				}
@@ -146,6 +169,15 @@
 				drawDots();
 				window.requestAnimationFrame(render);
 			})();
+			canvas.onmousemove = function (ev) {
+				var ev = ev || window.event;
+				mousePosition.x = ev.pageX;
+				mousePosition.y = ev.pageY;
+			};
+			canvas.onmouseout = function () {
+				mousePosition.x = canvas.width / 2;
+				mousePosition.y = canvas.height / 2;
+			};
 		</script>
 	</body>
 </html>

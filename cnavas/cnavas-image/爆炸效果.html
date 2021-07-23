@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			body {
+				margin: 0;
+				padding: 0;
+				overflow: hidden;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas"></canvas>
+		<script>
+			/** @type {HTMLCanvasElement} */
+			const canvas = document.querySelector("canvas");
+			canvas.style.backgroundColor = "#000";
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+			const ctx = canvas.getContext("2d");
+			const img = new Image();
+			const len = 8;
+			const size = 256;
+			let fm = 0;
+			img.src = "./images/bomb.jpg";
+			class Bomb {
+				constructor(x, y) {
+					this.fm = 0;
+					this.setInterval = null;
+					this.len = 8;
+					this.size = 256;
+					this.x = x || 0;
+					this.y = y || 0;
+				}
+				draw() {
+					ctx.drawImage(
+						img,
+						this.fm * this.size,
+						0,
+						this.size,
+						this.size,
+						this.x - this.size / 2,
+						this.y - this.size / 2,
+						this.size,
+						this.size
+					);
+					this.fm++;
+					if (this.fm === this.len) {
+						clearInterval(this.setInterval);
+						ctx.clearRect(
+							this.x - this.size / 2,
+							this.y - this.size / 2,
+							this.size,
+							this.size
+						);
+					}
+				}
+				setTime() {
+					this.setInterval = setInterval(() => {
+						this.draw();
+					}, 90);
+				}
+			}
+
+			canvas.addEventListener("click", (e) => {
+				e = e || window.event;
+				let [x, y] = [e.pageX, e.pageY];
+				let bo = new Bomb(x, y);
+				bo.setTime();
+			});
+		</script>
+	</body>
+</html>

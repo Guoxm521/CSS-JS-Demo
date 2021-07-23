@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<video src="./images/move.mp4" controls autoplay loop muted></video>
+		<canvas id="canvas"></canvas>
+		<script>
+			/** @type {HTMLCanvasElement} */
+			const canvas = document.querySelector("#canvas");
+			const vid = document.querySelector("video");
+			let [width, height] = [window.innerWidth, window.innerHeight];
+			canvas.width = width;
+			canvas.height = height;
+			const ctx = canvas.getContext("2d");
+			let interval = null;
+			vid.addEventListener("play", function () {
+				interval = setInterval(() => {
+					ctx.drawImage(vid, 0, 0);
+				}, 40);
+			});
+			vid.addEventListener("pause", function () {
+				clearInterval(interval);
+			});
+		</script>
+	</body>
+</html>

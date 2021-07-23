@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			body {
+				background-color: #000;
+			}
+			#canvas {
+				display: block;
+				margin: 0 auto;
+				padding: 0;
+				border: 1px solid red;
+			}
+			input {
+				display: block;
+				width: 800px;
+				margin: 15px auto;
+				padding: 0;
+				/* cursor: move; */
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas"></canvas>
+		<input type="range" min="0.5" max="3.0" step="0.01" value="1.0" />
+		<script>
+			/** @type {HTMLCanvasElement} */
+			let canvas = document.getElementById("canvas");
+			let ctx = canvas.getContext("2d");
+			let range = document.querySelector("input[type ='range']");
+			let image = new Image();
+
+			window.onload = function () {
+				canvas.width = 1152;
+				canvas.height = 768;
+				// let scale = range.value;
+				image.src = "images/img-lg.jpg";
+				let { width, height } = image;
+				let scale = range.value;
+				let diffX = 0;
+				let diffY = 0;
+
+				image.onload = function () {
+					drawImageByScale(scale);
+					range.onmousemove = function () {
+						scale = range.value;
+						drawImageByScale(scale);
+					};
+				};
+
+				function drawImageByScale(scale, diffX = 0, diffY = 0) {
+					let imageWidth = 1152 * scale;
+					let imageHeight = 768 * scale;
+					let x = canvas.width / 2 - imageWidth / 2 - diffX;
+					let y = canvas.height / 2 - imageHeight / 2 - diffY;
+					ctx.clearRect(0, 0, canvas.width, canvas.height);
+					ctx.drawImage(image, x, y, imageWidth, imageHeight);
+				}
+				canvas.onmousedown = function (e) {
+					canvas.style.cursor = "move";
+					let offsetX = e.offsetX;
+					let offsetY = e.offsetY;
+					console.log(1);
+					canvas.onmousemove = function (e) {
+						diffX = offsetX - e.offsetX;
+						diffY = offsetY - e.offsetY;
+						drawImageByScale(scale, diffX, diffY);
+					};
+					canvas.onmouseup = function (e) {
+						canvas.style.cursor = "";
+						canvas.onmousemove = "";
+					};
+				};
+			};
+		</script>
+	</body>
+</html>

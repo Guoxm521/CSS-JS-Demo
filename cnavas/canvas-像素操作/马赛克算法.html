@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			body {
+				margin: 0;
+				overflow: hidden;
+			}
+			#canvas {
+				background: antiquewhite;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas"></canvas>
+
+		<script>
+			/** @type {HTMLCanvasElement}  */
+			const canvas = document.getElementById("canvas");
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+			const ctx = canvas.getContext("2d");
+			const img = new Image();
+			let size = 20;
+			img.src = "images/dog.jpg";
+			img.onload = function () {
+				const { width, height } = img;
+
+				ctx.drawImage(img, 0, 0);
+
+				const imgDt = ctx.getImageData(0, 0, width, height);
+				const data = imgDt.data;
+				for (let y = 0; y < height; y += 20) {
+					for (let x = 0; x < width; x += 20) {
+						let ind = (y * width + x) * 4;
+						const [r, g, b] = [data[ind], data[ind + 1], data[ind + 2]];
+						ctx.fillStyle = `rgb(${r},${g},${b})`;
+						ctx.fillRect(x, y, size, size);
+					}
+				}
+				// canvas.toBlob(function (blob) {
+				// 	const a = document.createElement("a");
+				// 	let url = window.URL.createObjectURL(blob);
+				// 	a.href = url;
+				// 	a.download = "图片";
+				// 	a.click();
+				// 	window.URL.revokeObjectURL(url);
+				// });
+			};
+		</script>
+	</body>
+</html>

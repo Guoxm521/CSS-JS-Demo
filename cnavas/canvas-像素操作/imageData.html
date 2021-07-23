@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			body {
+				margin: 0;
+				overflow: hidden;
+			}
+			#canvas {
+				background: antiquewhite;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas"></canvas>
+		<script>
+			/** @type {HTMLCanvasElement}  */
+			const canvas = document.getElementById("canvas");
+
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+
+			const ctx = canvas.getContext("2d");
+			const [width, height] = [400, 200];
+
+			const imgDt = ctx.createImageData(width, height);
+
+			for (let i = 0; i < imgDt.data.length; i += 4) {
+				if (i < 100000 || i > 200000) {
+					imgDt.data[i + 0] = 0;
+					imgDt.data[i + 1] = 255;
+					imgDt.data[i + 2] = 0;
+					imgDt.data[i + 3] = 255;
+				}
+			}
+			ctx.putImageData(imgDt, 0, 0);
+		</script>
+	</body>
+</html>

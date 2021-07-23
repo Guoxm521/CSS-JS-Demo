@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			html,
+			body {
+				margin: 0;
+				height: 100%;
+			}
+			#rec {
+				width: 100%;
+				height: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="rec">
+			<canvas id="canvas"></canvas>
+		</div>
+		<script>
+			/** @type {HTMLCanvasElement} */
+			const rec = document.getElementById("rec");
+			const canvas = document.getElementById("canvas");
+			const { clientWidth, clientHeight } = rec;
+			canvas.width = clientWidth;
+			canvas.height = clientHeight;
+			const ctx = canvas.getContext("2d");
+			ctx.translate(100, 100);
+
+			let width, height, clipH;
+			let speed = 4;
+			const img = new Image();
+			img.src = "./images/dog.jpg";
+			img.onload = function () {
+				width = img.width;
+				height = img.height;
+				clipH = height;
+				//裁切
+				render();
+			};
+			function render() {
+				clipH -= speed;
+				const bool = clipH < 0;
+				console.log(123123);
+				if (bool) {
+					clipH = 0;
+				} else {
+					ctx.drawImage(
+						img,
+						0,
+						-clipH,
+						width,
+						height,
+						0,
+						-clipH,
+						width,
+						height
+					);
+					window.requestAnimationFrame(render);
+				}
+			}
+		</script>
+	</body>
+</html>
