@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let instance = new Object();
+			console.log(instance.__proto__);
+			console.log(instance.constructor);
+			// 实例.__proto__ === 原型;
+			// 原型.constructor === 构造函数;
+			// 构造函数.prototype === 原型;
+			console.log(instance.__proto__ === Object.prototype);
+			console.log(Object.prototype.constructor === Object);
+		</script>
+	</body>
+</html>
